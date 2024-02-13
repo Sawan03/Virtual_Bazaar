@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}
+    Market
+{% endblock %}
+
+{% block content %}
+
+<div class="row " style="margin-top: 20px;">
+    
+    <div class="col-8">
+        <h2 style="color: aliceblue;" >Available item on the Market</h2>
+        <table class="table table-hover table-white custom-margin" >
+            
+            <thead>
+               
+               <tr>
+                   <th scope="col">ID</th>
+                   <th scope="col">Name</th>
+                   <th scope="col">Barcode</th>
+                   <th scope="col">Price</th>
+                   <th scope="col">Options</th>
+               </tr>
+            </thead>
+            <tbody>
+               {% for item in items %}
+               {% include 'includes/item_modal.html' %}
+               
+               <tr>
+                   <td>{{ item.id }}</td>
+                   <td>{{ item.name }}</td>
+                   <td>{{ item.barcode }}</td>
+                   <td>{{ item.price }}Rs.</td>
+                   <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal-moreInfo-{{item.id}}">
+                    More info
+                  </button>
+                       <button class="btn btn-outline btn-success "  data-toggle="modal" data-target="#Modal-purchaseConfirm-{{item.id}}"> Buy</button>
+        
+                   </td>
+               </tr>
+               {% endfor %}
+            </tbody>
+           </table>
+    </div>
+    <div class="col-4" style="background-color:white;">
+        <h2 >Owned item</h2>
+        <p>Click on sell item </p>
+        <div class="row">
+            {% for owned_item in owned_items %}
+            {% include 'includes/owned_modal.html' %}
+            <div class="col-md-6">
+                <div class="card text-center bg-dark"style="margin-bottom:5px">
+                <div class="card-body">
+                    <h5 class="card-title"style="color: aliceblue;" >{{owned_item.name}}</h5>
+                    <button type="button" class="btn btn-outline-danger" style="margin-bottom: 2px;"
+                     data-toggle="modal" data-target="#Modal-sellingConfirm-{{owned_item.id}}">Sell this Item</button>
+                </div>
+                <p class="card-text" style="color: aliceblue;"  ><strong>This item costs {{owned_item.price}} Rs. </strong></p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

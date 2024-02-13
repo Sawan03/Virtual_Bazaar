@@ -1,0 +1,108 @@
+
+
+
+  {% extends 'base.html' %}
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block content %}
+
+
+<div class="row " style="margin-top: 20px;">
+    
+  <div class="col-8">
+    {% include 'includes/adminmodal.html' %}
+    
+    
+      <h2 style="color: white;">Adding <b>Item</b> on the market  <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModalLong">
+        Add Product
+      </button></h2> 
+      
+
+      <table class="table table-hover table-white custom-margin" >
+          
+          <thead>
+             
+             <tr>
+                 <th scope="col">ID</th>
+                 <th scope="col">Name</th>
+                 <th scope="col">Barcode</th>
+                 <th scope="col">Price</th>
+                 <th scope="col">Options</th>
+                    
+             </tr>
+             
+
+          </thead>
+          
+          <tbody>
+           {% for row in items  %}
+             <tr>
+                 <td>{{row.id}}</td>
+                 <td>{{row.name}}</td>
+                 <td>{{row.barcode}}</td>
+                 <td>{{row.price}}</td>
+                 <td><button href="/update/{{row.id}}"type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLongg{{row.id}}">
+                  Edit
+                </button>
+                     <button href="/delete/{{row.id}}/" class="btn btn-outline btn-danger " onclick="return delete('Are You Delete this item ?')">Delete</button>
+      
+                 </td>
+             </tr>
+       
+          </tbody>
+         
+
+    
+
+          
+          <div class="modal fade" id="exampleModalLongg{{row.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Updating Products</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="{{url_for('update')}}" method="POST">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1">Item Name</label>
+                      <input type="hidden" name="id" value="{{row.id}}">
+                      <input type="text" name="name" class="form-control" id="#" value="{{row.name}}">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1">Barcode</label>
+                      <input type="text" name="barcode" class="form-control" id="exampleFormControlInput1" value="{{row.barcode}}">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1">Price</label>
+                      <input type="text" name="price" class="form-control" id="exampleFormControlInput1" value="{{row.price}}">
+                    </div>
+                   
+                    <div class="form-group">
+                      <label for="exampleFormControlTextarea1">Description</label>
+                      <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3" value = "{{row.description}}"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update product</button>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+          {%  endfor %}
+         </table>
+
+         
+  </div>
+
+ 
+
+
+
+{% endblock %}
